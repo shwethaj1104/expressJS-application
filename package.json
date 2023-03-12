@@ -1,0 +1,22 @@
+{
+  "name": "express-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "shwetha",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-api-cache": "^1.0.4",
+    "mongodb": "^5.1.0",
+    "mongoose": "^7.0.1",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "dotenv": "^8.0.0",
+    "nodemon": "^1.19.0"
+  }
+}
