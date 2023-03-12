@@ -17,6 +17,6 @@ connectDB();
 
 /* Use router
 =========================== */
-app.use('/employees', employeeRouter)
+app.use('/api/v1/employees', employeeRouter)
 
 app.listen(3000, () => console.log('Server Started'))

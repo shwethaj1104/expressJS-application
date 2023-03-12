@@ -4,7 +4,8 @@ const NodeCache = require('node-cache')
 //Setting cache time to live to 10 seconds
 const myCache = new NodeCache({stdTTL:10})
 
-//Get all Employees
+// @desc      Get all Employees
+// @route     GET '/api/v1/employees'
 exports.getAllEmployees = async (req, res) => {
     let employee;
     let mykeys = myCache.keys();
@@ -23,7 +24,8 @@ exports.getAllEmployees = async (req, res) => {
     }
 }
 
-//Get cached employee
+// @desc      Get cached Employees
+// @route     GET '/api/v1/employees/ID'
  exports.getCachedEmployee = async(req, res) => {
     let employee;
     try {
@@ -41,12 +43,14 @@ exports.getAllEmployees = async (req, res) => {
     }  
 }
 
-//Get employee by ID
+// @desc      Get Employee by ID
+// @route     GET '/api/v1/employees/ID'
 exports.getEmployeeByID = (req, res) => {
     res.json(res.employee) 
 }
 
-//Add employee
+// @desc      Add Employee
+// @route     POST '/api/v1/employees'
 exports.addEmployee = async (req, res) => {
     const employee = new Employees({name: req.body.name})
     try {
@@ -58,7 +62,8 @@ exports.addEmployee = async (req, res) => {
     }
 }
 
-//Update employee
+// @desc      Update Employee
+// @route     PATCH '/api/v1/employees/ID'
 exports.updateEmployee = async (req, res) => {
     if (req.body.name != null) {
         res.employee.name = req.body.name
@@ -71,7 +76,8 @@ exports.updateEmployee = async (req, res) => {
     }
 }
 
-//Delete employee
+// @desc      Delete Employee
+// @route     DELETE '/api/v1/employees/ID'
 exports.deleteEmployee = async (req, res) => {
     try {   
         await res.employee.deleteOne()
@@ -82,7 +88,8 @@ exports.deleteEmployee = async (req, res) => {
     }
 }
 
-//Delete all cached data
+// @desc      Delete all cached data
+// @route     DELETE '/api/v1/employees'
 exports.deleteAllFromCache = async (req, res) => {
     try {   
         const data = myCache.flushAll()
