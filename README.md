@@ -17,9 +17,15 @@ _________________________________________
 Endpoints : 
 
 Get all employees : http://localhost:3000/api/v1/employees
+
 Add / Create employee : http://localhost:3000/api/v1/employees
+
 Get a employee : http://localhost:3000/api/v1/employees/640db87cafa2dd36c9d8c7e6
+
 Get cached employee/data : http://localhost:3000/api/v1/employees/cached/shreya
+
 Update  employee : http://localhost:3000/api/v1/employees/640db7a107eee189800d492e
+
 Delete employee by ID : http://localhost:3000/api/v1/employees/640db7a107eee189800d492e
+
 Delete all cached data/entries : http://localhost:3000/api/v1/employees/
