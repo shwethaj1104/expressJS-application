@@ -43,7 +43,7 @@ exports.getAllEmployees = async (req, res) => {
     }  
 }
 
-// @desc      Get Employee by ID
+// @desc      Get Employee by ID 
 // @route     GET '/api/v1/employees/ID'
 exports.getEmployeeByID = (req, res) => {
     res.status(200).json(res.employee) 
