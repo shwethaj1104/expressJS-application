@@ -13,4 +13,6 @@ Clone project using --> git clone
 install required packages using --> npm install
 
 run the project using --> npm start
-___________________________
+_________________________________________
+Endpoints : 
+
