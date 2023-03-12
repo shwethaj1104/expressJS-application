@@ -1,34 +1,28 @@
 const express = require('express')
 const router = express.Router()
-const Employees = require('../models/employeeModel')
+
 const EmployeeService = require('../services/employeeService')
-
-// var cacheService = require("express-api-cache");
 const getEmployees = require('../utils/getEmployeesByID');
-const getCache = require('../utils/getCacheByID');
-// var cache = cacheService.cache;
 
-//get all
-// router.get('/', cache("2 minutes"),EmployeeService.getAllEmployees)
+//Get all employees
 router.get('/',EmployeeService.getAllEmployees)
 
-// Getting One
-// router.get('/:id',cache("2 minutes"), getEmployees,EmployeeService.getEmployeeByID)
+// Get One employee by ID
 router.get('/:id',getEmployees,EmployeeService.getEmployeeByID)
-router.get('/cached/:id',EmployeeService.getEmployeeByCached)
 
-// Creating one
+//Get one cached data
+router.get('/cached/:id',EmployeeService.getCachedEmployee)
+
+// Creat/Add employee
 router.post('/',EmployeeService.addEmployee)
 
-// Updating One
+// Update employee
 router.patch('/:id', getEmployees, EmployeeService.updateEmployee)
 
-// Deleting One
+// Delete employee
 router.delete('/:id', getEmployees,EmployeeService.deleteEmployee)
 
+//Delete all cached key
 router.delete('/',EmployeeService.deleteAllFromCache)
-
-//Delete existing cache
-// router.delete('/deleteCache',EmployeeService.deleteCache)
 
 module.exports = router

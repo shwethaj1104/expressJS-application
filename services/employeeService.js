@@ -1,37 +1,39 @@
 const Employees = require('../models/employeeModel')
-
 const NodeCache = require('node-cache')
-const myCache = new NodeCache({stdTTL:50})
 
+//Setting cache time to live to 10 seconds
+const myCache = new NodeCache({stdTTL:10})
+
+//Get all Employees
 exports.getAllEmployees = async (req, res) => {
+    let employee;
+    let mykeys = myCache.keys();
     try {
         if(myCache.has("ListOfData")){
-            const employee = myCache.get("ListOfData")
-            let mykeys = myCache.keys();
-            res.json({ message: 'Cache hit', employee,mykeys })
+            employee = myCache.get("ListOfData")
+            res.json({ message: 'Cache hit', employee, mykeys })
         }
         else{
-            const employee = await Employees.find()
+            employee = await Employees.find()
             myCache.set("ListOfData",employee)
-            let mykeys = myCache.keys();
             res.json({ message: 'Cache miss' ,employee,mykeys})
         }
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
 }
- exports.getEmployeeByCached = async(req, res) => {
-    let employee
+
+//Get cached employee
+ exports.getCachedEmployee = async(req, res) => {
+    let employee;
     try {
       if(myCache.has(req.params.id)){
         employee = myCache.get(req.params.id)
-         res.json({ message: 'Cache hit', employee })
+        res.json({ message: 'Cache hit', employee })
       }else{
-            let newemployee = new Employees({
-                name: req.params.id
-            })
-            employee = await newemployee.save()
-          myCache.set(req.params.id,employee)
+        let newEmployee = new Employees({name: req.params.id})
+        employee = await newEmployee.save()
+        myCache.set(req.params.id,employee)
         res.json({ message: 'Cache miss', employee })
       }
     } catch (err) {
@@ -39,14 +41,14 @@ exports.getAllEmployees = async (req, res) => {
     }  
 }
 
+//Get employee by ID
 exports.getEmployeeByID = (req, res) => {
-    res.json(res.employee) //in getSubscriber we are filtering by id
+    res.json(res.employee) 
 }
 
+//Add employee
 exports.addEmployee = async (req, res) => {
-    const employee = new Employees({
-        name: req.body.name,
-    })
+    const employee = new Employees({name: req.body.name})
     try {
         const newSubscriber = await employee.save()
         myCache.set(req.body.name,employee)
@@ -56,21 +58,20 @@ exports.addEmployee = async (req, res) => {
     }
 }
 
+//Update employee
 exports.updateEmployee = async (req, res) => {
     if (req.body.name != null) {
         res.employee.name = req.body.name
     }
-    if (req.body.subscribedToChannel != null) {
-        res.employee.subscribedToChannel = req.body.subscribedToChannel
-    }
     try {
-        const updatedSubscriber = await res.employee.save()
-        res.json(updatedSubscriber)
+        const employee = await res.employee.save()
+        res.json(employee)
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
 }
 
+//Delete employee
 exports.deleteEmployee = async (req, res) => {
     try {   
         await res.employee.deleteOne()
@@ -81,11 +82,12 @@ exports.deleteEmployee = async (req, res) => {
     }
 }
 
+//Delete all cached data
 exports.deleteAllFromCache = async (req, res) => {
     try {   
         const data = myCache.flushAll()
         let mykeys = myCache.keys();
-        res.json({ message: 'Deleted cache',mykeys })
+        res.json({ message: 'Deleted cache', mykeys })
     } catch (err) {
         res.status(500).json({ message: err.message })
     }

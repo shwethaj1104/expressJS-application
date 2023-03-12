@@ -2,11 +2,8 @@
 const express = require('express')
 
 const connectDB = require('./config/db');
-const subscribersRouter = require('./routes/employees')
-// const cacheRouter = require('./routes/cache')
+const employeeRouter = require('./routes/employees')
 const app = express()
-
-
 
 require('dotenv').config()
 
@@ -18,7 +15,8 @@ app.use(express.json())
 =========================== */
 connectDB();
 
-app.use('/employees', subscribersRouter)
-// app.use('/caching', cacheRouter)
+/* Use router
+=========================== */
+app.use('/employees', employeeRouter)
 
 app.listen(3000, () => console.log('Server Started'))
